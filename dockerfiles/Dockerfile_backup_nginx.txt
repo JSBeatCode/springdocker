@@ -1,0 +1,18 @@
+# Dockerfile
+# Official NGINX base image
+FROM nginx:latest
+
+# Remove default nginx.conf
+RUN rm /etc/nginx/nginx.conf
+
+# Copy our custom nginx.conf to the container
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Copy static content
+COPY static-html-directory /usr/share/nginx/html
+
+# Expose port 80
+EXPOSE 80
+
+# Start NGINX
+CMD ["nginx", "-g", "daemon off;"]

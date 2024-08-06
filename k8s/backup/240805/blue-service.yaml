@@ -1,0 +1,17 @@
+apiVersion: v1 # Service API Version
+kind: Service # Resource Type
+metadata:
+  name: myapp-blue # Service Name
+  namespace: bluegreen # The Namespace in which this service is
+spec:
+  # type: ClusterIP # The type of service. use this when you use an actual host.
+  type: NodePort # for local test
+  selector:
+    app: myapp # Pod Label that this service handles
+    version: blue # Label Version
+  ports:
+  - protocol: TCP # Connection Protocol
+    port: 80 # This service's port
+    targetPort: 8080 # the port of pod that this service is connected to
+    nodePort: 30081  # NodePort. commenting this when you use an actual host.
+  

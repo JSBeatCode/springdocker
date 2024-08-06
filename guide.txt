@@ -1,0 +1,101 @@
+1. docker 설치
+3. DockerFile 코딩
+4. spring app 코딩 (blue)
+5. spring app build (blue)
+6. docker image build and push (docker build -t)
+7. spring app 코딩 (green)
+8. spring app build (green)
+9. docker image build and push (docker build -t)
+10. docker 에서 kubernetes 세팅
+11. kubernetes yaml 코딩 
+12. k8s yaml 실행(create namespace, apply -f)
+13. install nginx
+14. ngix.conf
+15. test
+ - blue green 모두 실행
+ - green 죽이기
+ - blue 죽이고 green 살리기
+
+-----------------------------------
+# Spring Boot 애플리케이션 빌드
+./mvnw clean package
+
+docker build -t myapp:blue .
+docker build -t myapp:green .
+
+# docker run 
+docker run -p 8080:8080 myapp:blue
+docker run -p 8081:8081 myapp:green
+
+# docker 온라인 레지스터에 등록
+# docker push myrepo/myapp:blue
+# docker push myrepo/myapp:green
+
+# k8s 종합 workplace인 namespace 생성
+kubectl create namespace bluegreen
+
+# Blue 환경 배포
+kubectl apply -f k8s/deployment-blue.yaml
+kubectl apply -f k8s/service-blue.yaml
+
+# Green 환경 배포
+kubectl apply -f k8s/deployment-green.yaml
+kubectl apply -f k8s/service-green.yaml
+
+# 하나 환경 배포
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+
+# Ingress 배포
+# kubectl apply -f k8s/ingress.yaml
+
+# k8s 삭제 명령어
+kubectl delete -f k8s/deployment-blue.yaml
+kubectl delete -f k8s/service-blue.yaml
+kubectl delete -f k8s/deployment-green.yaml
+kubectl delete -f k8s/service-green.yaml
+
+kubectl delete all --all --all-namespaces
+kubectl delete namespace bluegreen
+
+# k8s 상태 명령어 
+kubectl describe ingress myapp-ingress -n bluegreen
+kubectl get all --all-namespaces
+kubectl get pods -n bluegreen
+kubectl get services -n bluegreen
+kubectl get ingress -n bluegreen
+kubectl get nodes
+
+# k8s 특정 container 중지 
+kubectl scale deployment myapp-green --replicas=0 -n bluegreen
+
+# k8s ingress 수정
+# kubectl edit ingress myapp-ingress -n bluegreen
+
+# Docker Compose로 Nginx 실행
+# docker-compose up -d
+
+# Docker Compose로 Nginx 취소 및 재실행
+# docker-compose down
+# docker-compose restart
+
+# docker nginx container 실행
+# docker run -d -p 8081:8081 -v /c/nginx-1.26.1/conf/nginx.conf:/etc/nginx/nginx.conf:ro nginx
+
+# docker run -d -p 80:80 -v /c/Users/jsd/Documents/programming/springboot-workspace/springdocker/nginx.conf:/etc/nginx/nginx.conf:ro nginx
+
+# nginx 명령어
+nginx -s stop	fast shutdown
+nginx -s quit	graceful shutdown
+nginx -s reload	changing configuration, starting new worker processes with a new configuration, graceful shutdown of old worker processes
+nginx -s reopen	re-opening log files
+
+# nginx docker image 생성
+docker build -t custom-nginx .
+
+# nginx docker container 생성
+docker run --name mynginx -p 80:80 -d custom-nginx
+
+# nginx docker container 정지 및 삭제
+docker stop mynginx
+docker rm mynginx

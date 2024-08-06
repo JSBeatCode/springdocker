@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1 # Ingress Resource API Version
+kind: Ingress # Resource Type
+metadata:
+  name: myapp-ingress # Ingress Resource name
+  namespace: bluegreen
+spec:
+  rules: # Routing Rule of Ingress
+  - host: myapp.example.com # actual host
+  # - host: localhost # if you don't have host, you need to use localhost and set the nodePort differently between blue-service.yaml and green-service.yaml
+    http: # HTTP Protocol
+      paths: # Routing Setting based on paths
+      - path: /
+        pathType: Prefix # paths type 
+        backend: # Requesting Backend 
+          service:
+            name: myapp-blue # you can switch between blue and green 
+            port:
+              number: 80

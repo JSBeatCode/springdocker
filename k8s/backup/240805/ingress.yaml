@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: myapp-ingress
+  namespace: bluegreen
+spec:
+  rules:
+  - host: localhost  # localhost를 사용하여 로컬 환경에서 접근
+    http:
+      paths:
+      - path: /  # /blue 경로로 접근 시
+        pathType: Prefix
+        backend:
+          service:
+            name: myapp-blue  # myapp-blue 서비스로 라우팅
+            port:
+              number: 80
