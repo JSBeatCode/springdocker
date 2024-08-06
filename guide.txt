@@ -6,11 +6,12 @@
 7. spring app 코딩 (green)
 8. spring app build (green)
 9. docker image build and push (docker build -t)
-10. docker 에서 kubernetes 세팅
+10. docker 에서 kubernetes 세팅 (enable switch)
 11. kubernetes yaml 코딩 
 12. k8s yaml 실행(create namespace, apply -f)
 13. install nginx
-14. ngix.conf
+14. ngix.conf 작성
+15. nginx 실행
 15. test
  - blue green 모두 실행
  - green 죽이기
@@ -85,10 +86,11 @@ kubectl scale deployment myapp-green --replicas=0 -n bluegreen
 # docker run -d -p 80:80 -v /c/Users/jsd/Documents/programming/springboot-workspace/springdocker/nginx.conf:/etc/nginx/nginx.conf:ro nginx
 
 # nginx 명령어
-nginx -s stop	fast shutdown
-nginx -s quit	graceful shutdown
-nginx -s reload	changing configuration, starting new worker processes with a new configuration, graceful shutdown of old worker processes
-nginx -s reopen	re-opening log files
+nginx # start
+nginx -s stop	# fast shutdown
+nginx -s quit	# graceful shutdown
+nginx -s reload	# changing configuration, starting new worker processes with a new configuration, graceful shutdown of old worker processes
+nginx -s reopen	# re-opening log files
 
 # nginx docker image 생성
 docker build -t custom-nginx .
