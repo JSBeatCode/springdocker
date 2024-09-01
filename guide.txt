@@ -24,6 +24,10 @@
 docker build -t myapp:blue .
 docker build -t myapp:green .
 
+# docker image delete
+# docker rmi -f <IMAGE_ID>
+# docker rmi <IMAGE_ID_1> <IMAGE_ID_2> <IMAGE_ID_3>
+
 # docker run 
 # docker run -p 8080:8080 myapp:blue
 # docker run -p 8081:8081 myapp:green
