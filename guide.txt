@@ -96,7 +96,7 @@ kubectl scale deployment/spring-boot-app --replicas=5
 # nginx start
 # nginx -s stop	# fast shutdown
 # nginx -s quit	# graceful shutdown
-#nginx -s reload	# changing configuration, starting new worker processes with a new configuration, graceful shutdown of old worker processes
+# nginx -s reload	# changing configuration, starting new worker processes with a new configuration, graceful shutdown of old worker processes
 # nginx -s reopen	# re-opening log files
 
 # nginx docker image 생성
