@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-//@RestController
-@Controller
+
+//@RestController // if it is for only backend service
+@Controller // if it is for showing thymleaf ui
 public class SpringdockerController {
 
 	@GetMapping("/")
